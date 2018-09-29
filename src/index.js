@@ -14,7 +14,7 @@ import './style.css';
 const GITHUB_BASE_URL = 'https://api.github.com/graphql';
 
 require('dotenv').config();
-const httpLink = new HttpLink({
+const httpLink= new HttpLink({
   uri: GITHUB_BASE_URL,
   headers: {
     authorization: `Bearer ${process.env.REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN
