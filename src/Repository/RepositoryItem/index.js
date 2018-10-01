@@ -1,10 +1,25 @@
 import React from 'react';
+import gql from 'graphql-tag';
+import { Mutation } from 'react-apollo';
 
 import Link from '../../Link';
+import Button from '../../Button';
 
 import '../style.css';
 
+const STAR_REPOSITORY = gql`
+  mutation($id: ID!) {
+    addStar(input: { starrableId: $id }) {
+      starrable {
+        id
+        viewerHasStarred
+      }
+    }
+  }
+`;
+
 const RepositoryItem = ({
+  id,
   name,
   url,
   descriptionHTML,
@@ -21,8 +36,22 @@ const RepositoryItem = ({
         <Link href={url}>{name}</Link>
       </h2>
 
-      <div className="RepositoryItem-title-action">
-        {stargazers.totalCount} Stars
+      <div>
+        {!viewerHasStarred ? (
+          <Mutation mutation={STAR_REPOSITORY} variables={{ id }}>
+            {(addStar, { data, loading, error }) => (
+              <Button
+                className={'RepositoryItem-title-action'}
+                onClick={addStar}
+              >
+                {stargazers.totalCount} Star
+              </Button>
+            )}
+          </Mutation>
+        ) : (
+          <span>{/* removeStar mutation */}</span>
+        )}
+        {/* updateSubscription mutation*/}
       </div>
     </div>
 
