@@ -5,4 +5,3 @@ git-library
 Requirements
 ------------
 - frontend: React
-- backnend: GraphQL
